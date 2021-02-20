@@ -1,0 +1,15 @@
+<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg">
+ <title/>
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <rect id="svg_2" height="291.296083" width="246.644859" y="74.883471" x="131.082868" stroke-width="1.5" stroke="#fbb917" fill="#fbb917"/>
+  <rect transform="rotate(30.40852165222168 286.299011230469,338.5382995605468) " stroke="#fbb917" id="svg_3" height="53.156219" width="246.644859" y="311.960206" x="162.976607" stroke-width="1.5" fill="#fbb917"/>
+  <rect transform="rotate(150.60955810546875 233.1428070068359,336.41204833984375) " stroke="#fbb917" id="svg_4" height="53.156219" width="246.644859" y="309.833956" x="109.820384" stroke-width="1.5" fill="#fbb917"/>
+  <path id="svg_1" d="m393,450a14.92,14.92 0 0 1 -7.46,-2l-128.54,-73.71l-128.54,73.71a15,15 0 0 1 -22.46,-13l0,-372a15,15 0 0 1 15,-15l272,0a15,15 0 0 1 15,15l0,372a15,15 0 0 1 -15,15zm-136,-108a14.92,14.92 0 0 1 7.46,2l113.54,65.1l0,-331.1l-242,0l0,331.1l113.54,-65.1a14.92,14.92 0 0 1 7.46,-2z"/>
+ </g>
+</svg>
