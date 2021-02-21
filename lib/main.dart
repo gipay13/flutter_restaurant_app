@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'ToEat',
       theme: ThemeData(
         primaryColor: Colors.white,
-        accentColor: secondaryColor,
+        accentColor: buttonColor,
         textTheme: customTheme,
       ),
       home: SplashScreenView(
