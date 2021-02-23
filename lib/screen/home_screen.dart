@@ -85,4 +85,3 @@ Future<List<Restaurant>> fetchJson(BuildContext context) async {
 
 
 
-

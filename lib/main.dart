@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'ToEat',
       theme: ThemeData(
-        primaryColor: Colors.white,
+        primaryColor: buttonColor,
         accentColor: buttonColor,
         textTheme: customTheme,
       ),
