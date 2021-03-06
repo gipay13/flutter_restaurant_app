@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/assets/style/style.dart';
-import 'package:flutter_restaurant_app/model/local_restaurant_model.dart';
-import 'package:flutter_restaurant_app/screen/custom_iconbutton.dart';
+import 'package:flutter_restaurant_app/model/restaurant_list_model.dart';
+import 'package:flutter_restaurant_app/widget/custom_iconbutton.dart';
 import 'package:flutter_restaurant_app/widget/custom_sliver.dart';
-import 'package:flutter_restaurant_app/widget/list_drink.dart';
-import 'package:flutter_restaurant_app/widget/list_food.dart';
 import 'package:flutter_svg/svg.dart';
 
 class DetailScreen extends StatelessWidget {
   static const routeName = "/detail";
   final double expandedHeight = 400;
   final double roundedContainerHeight = 50;
-  final Restaurant restaurant;
+  final RestaurantL restaurantL;
 
-  const DetailScreen({@required this.restaurant});
+  const DetailScreen({@required this.restaurantL});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +33,7 @@ class DetailScreen extends StatelessWidget {
 
   Widget _buildSliverHead() {
     return SliverPersistentHeader(
-      delegate: DetailSliverDelegate(expandedHeight, roundedContainerHeight, restaurant.pictureId, restaurant.name, restaurant.city),
+      delegate: DetailSliverDelegate(expandedHeight, roundedContainerHeight, "https://restaurant-api.dicoding.dev/images/medium/${restaurantL.pictureId}", restaurantL.name, restaurantL.city),
     );
   }
 
@@ -64,24 +62,14 @@ class DetailScreen extends StatelessWidget {
                   children: [
                     SvgPicture.asset("lib/assets/icon/star.svg", width: 30,),
                     SizedBox(width: 3,),
-                    Text("${restaurant.rating}", style: Theme.of(context).textTheme.headline5.copyWith(color: buttonColor, fontWeight: FontWeight.bold),)
+                    Text("${restaurantL.rating}", style: Theme.of(context).textTheme.headline5.copyWith(color: buttonColor, fontWeight: FontWeight.bold),)
                   ],
                 ),
                 SizedBox(height: 10,),
-                Text(restaurant.description, style: Theme.of(context).textTheme.bodyText2),
+                Text(restaurantL.description, style: Theme.of(context).textTheme.bodyText2),
               ],
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(left: 15, right: 30, top: 10, bottom: 10),
-            child: Text("Makanan", style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.bold, color: buttonColor)),
-          ),
-          ListFood(),
-          Padding(
-            padding: EdgeInsets.only(left: 15, right: 30, top: 20, bottom: 10),
-            child: Text("Minuman", style: Theme.of(context).textTheme.headline6.copyWith(fontWeight: FontWeight.bold, color: buttonColor)),
-          ),
-          ListDrink()
         ],
       ),
     );

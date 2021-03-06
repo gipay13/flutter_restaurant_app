@@ -1,87 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/assets/style/style.dart';
-import 'package:flutter_restaurant_app/model/local_restaurant_model.dart';
-import 'package:flutter_restaurant_app/screen/detail_screen.dart';
+import 'package:flutter_restaurant_app/model/provider/restaurant_provider.dart';
+import 'package:flutter_restaurant_app/model/services/api_services.dart';
+import 'package:flutter_restaurant_app/screen/restaurant_list_screen.dart';
+import 'package:flutter_restaurant_app/screen/restaurant_search_screen.dart';
+import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static const routeName = "/home";
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedItemPosition = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NestedScrollView(
-        headerSliverBuilder: (context, isScrolled) {
-          return [
-            SliverAppBar(
-              backgroundColor: buttonColor,
-              expandedHeight: 120,
-              pinned: false,
-              flexibleSpace: FlexibleSpaceBar(
-                title: Text("Makan Apa Hari Ini", style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.white),),
-                centerTitle: true,
-              ),
-            ),
-          ];
-        },
-        body: Container(child: _buildList(context),),
+      body: _selectedItemPosition == 0
+          ? ChangeNotifierProvider<RestaurantListProvider>(create: (_) => RestaurantListProvider(ApiServices()), child: RestaurantListScreen(),)
+          : _selectedItemPosition == 1
+          ? RestaurantSearchScreen()
+          : Placeholder(),
+      bottomNavigationBar: SnakeNavigationBar.color(
+        behaviour: SnakeBarBehaviour.floating,
+        snakeShape: SnakeShape.circle,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25))),
+        padding: EdgeInsets.all(12),
+
+        snakeViewColor: buttonColor,
+        selectedItemColor: SnakeShape.circle == SnakeShape.indicator ? Colors.black : null,
+
+        showUnselectedLabels: false,
+        showSelectedLabels: false,
+
+        currentIndex: _selectedItemPosition,
+        onTap: (selected) => setState(() => _selectedItemPosition = selected),
+        items: [
+          BottomNavigationBarItem(icon: SvgPicture.asset("lib/assets/icon/home.svg", width: 25,)),
+          BottomNavigationBarItem(icon: SvgPicture.asset("lib/assets/icon/search.svg", width: 25,)),
+          BottomNavigationBarItem(icon: SvgPicture.asset("lib/assets/icon/profile.svg", width: 25,)),
+        ],
       ),
     );
   }
 }
-
-Widget _buildList(BuildContext context) {
-  return FutureBuilder(
-    future: fetchJson(context),
-    builder: (context, snapshot) {
-      if(snapshot.hasData) {
-        return ListView.builder(
-          itemCount: snapshot.data.length,
-          shrinkWrap: true,
-          itemBuilder: (BuildContext context, int index) {
-            Restaurant restaurant = snapshot.data[index];
-            return _buildListItem(context, index, restaurant);
-          }
-        );
-      }
-      return Center(child: CircularProgressIndicator(strokeWidth: 3));
-    },
-  );
-}
-
-Widget _buildListItem(context, index, Restaurant restaurant) {
-  return ListTile(
-    contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 40),
-    leading: ClipRRect(borderRadius: BorderRadius.all(Radius.circular(7)), child: Image.network(restaurant.pictureId, width: 70,height: 150, fit: BoxFit.cover)),
-    title: Text(restaurant.name, style: Theme.of(context).textTheme.bodyText1.copyWith(fontWeight: FontWeight.bold, color: buttonColor),),
-    subtitle: Column(
-      children: [
-        Row(
-          children: [
-            SvgPicture.asset("lib/assets/icon/location.svg", width: 15,),
-            SizedBox(width: 3),
-            Text(restaurant.city, style: Theme.of(context).textTheme.bodyText2,),
-          ],
-        ),
-        Row(
-          children: [
-            SvgPicture.asset("lib/assets/icon/star.svg", width: 15,),
-            SizedBox(width: 3),
-            Text("${restaurant.rating}", style: Theme.of(context).textTheme.bodyText2,),
-          ],
-        ),
-      ],
-    ),
-    trailing: SvgPicture.asset("lib/assets/icon/forward.svg", width: 17,),
-    onTap: () { Navigator.pushNamed(context, DetailScreen.routeName, arguments: restaurant); },
-  );
-}
-
-Future<List<Restaurant>> fetchJson(BuildContext context) async {
-  final jsonString = await DefaultAssetBundle.of(context).loadString("lib/model/local_restaurant.json");
-  return restaurantFromJson(jsonString);
-}
-
 
 

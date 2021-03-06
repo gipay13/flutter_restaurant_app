@@ -14,24 +14,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'ToEat',
-      theme: ThemeData(
-        primaryColor: buttonColor,
-        accentColor: buttonColor,
-        textTheme: customTheme,
-      ),
-      home: SplashScreenView(
-        home: HomeScreen(),
-        duration: 3000,
-        imageSize: 100,
-        imageSrc: "lib/assets/image/splash.png",
-        backgroundColor: buttonColor,
-      ),
-      routes: {
-        HomeScreen.routeName : (context) => HomeScreen(),
-        DetailScreen.routeName : (context) => DetailScreen(restaurant: ModalRoute.of(context).settings.arguments,)
-      }
+        debugShowCheckedModeBanner: false,
+        title: 'ToEat',
+        theme: ThemeData(
+          primaryColor: buttonColor,
+          accentColor: buttonColor,
+          textTheme: customTheme,
+        ),
+        home: SplashScreenView(
+          home: HomeScreen(),
+          duration: 3000,
+          imageSize: 100,
+          imageSrc: "lib/assets/image/splash.png",
+          backgroundColor: buttonColor,
+        ),
+        routes: {
+          HomeScreen.routeName : (context) => HomeScreen(),
+          DetailScreen.routeName : (context) => DetailScreen(restaurantL : ModalRoute.of(context).settings.arguments)
+        }
     );
   }
 }
