@@ -2,7 +2,9 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_restaurant_app/model/restaurant_list_model.dart';
+import 'package:flutter_restaurant_app/model/restaurant_search_model.dart';
 import 'package:flutter_restaurant_app/model/services/api_services.dart';
+import 'package:flutter_svg/avd.dart';
 
 enum ResultState { Loading, NoData, HasData, Error }
 
@@ -17,8 +19,8 @@ class RestaurantListProvider extends ChangeNotifier {
   String _message = '';
   ResultState _state;
 
-  String get message => _message;
   RestaurantList get result => _restaurantList;
+  String get message => _message;
   ResultState get state => _state;
 
   Future<dynamic> _fetchRestaurant() async {
@@ -43,4 +45,25 @@ class RestaurantListProvider extends ChangeNotifier {
       return _message = 'Error --> $e';
     }
   }
+}
+
+class RestaurantSearchProvider extends ChangeNotifier {
+  final ApiServices apiServices;
+
+  RestaurantSearchProvider(this.apiServices){
+    _searchRestaurant();
+  }
+
+  RestaurantSearch _restaurantSearch;
+  String _message = '';
+  ResultState _state;
+
+  RestaurantSearch get result => _restaurantSearch;
+  String get message => _message;
+  ResultState get state => _state;
+
+  Future<dynamic> _searchRestaurant() async {
+
+  }
+
 }

@@ -47,7 +47,7 @@ class _RestaurantListState extends State<RestaurantListScreen> {
                     child: ScaleAnimation(
                       scale: 0.2,
                       child: SlideAnimation(
-                        child: RestaurantCard(restaurant: restaurant, onTap: () { Navigator.pushNamed(context, DetailScreen.routeName, arguments: restaurant); }),
+                        child: RestaurantCard(restaurant: restaurant, onTap: () { Navigator.pushNamed(context, DetailScreen.routeNameList, arguments: restaurant); }),
                       ),
                     )
                 );

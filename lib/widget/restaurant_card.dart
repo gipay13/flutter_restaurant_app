@@ -17,7 +17,7 @@ class RestaurantCard extends StatelessWidget {
         alignment: Alignment.bottomLeft,
         children: [
           Ink.image(
-            image: restaurant.id == null ? Container(width: 70, height: 150, child: Icon(Icons.error),) : NetworkImage("https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId}",),
+            image: restaurant.id == null ? Container(width: 70, height: 150, child: Icon(Icons.error),) : NetworkImage("https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId ?? ''}",),
             fit: BoxFit.cover,
             height: double.infinity,
             child: InkWell(onTap: onTap),
