@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_restaurant_app/assets/style/style.dart';
 import 'package:flutter_restaurant_app/model/restaurant_search_model.dart';
 import 'package:flutter_restaurant_app/model/services/api_services.dart';
-import 'package:flutter_restaurant_app/widget/empty_search.dart';
+import 'package:flutter_restaurant_app/widget/blank_widget.dart';
 import 'package:flutter_restaurant_app/widget/list_search.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'detail_screen.dart';
 
@@ -76,10 +74,10 @@ class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
                         } else if (snapshot.hasError) {
                           return Center(child: Text(snapshot.error.toString()));
                         }
-                        return Text('');
+                        return BlankWidget(icon: "lib/assets/icon/error.svg", text: "Unable Connect To Internet",);
                       }
                   )
-                  : EmptySearch()
+                  : BlankWidget(icon: "lib/assets/icon/search.svg", text: "Type Restaurant",)
             ],
           ),
         )

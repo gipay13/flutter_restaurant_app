@@ -46,24 +46,3 @@ class RestaurantListProvider extends ChangeNotifier {
     }
   }
 }
-
-class RestaurantSearchProvider extends ChangeNotifier {
-  final ApiServices apiServices;
-
-  RestaurantSearchProvider(this.apiServices){
-    _searchRestaurant();
-  }
-
-  RestaurantSearch _restaurantSearch;
-  String _message = '';
-  ResultState _state;
-
-  RestaurantSearch get result => _restaurantSearch;
-  String get message => _message;
-  ResultState get state => _state;
-
-  Future<dynamic> _searchRestaurant() async {
-
-  }
-
-}

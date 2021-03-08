@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/model/provider/restaurant_provider.dart';
+import 'package:flutter_restaurant_app/widget/blank_widget.dart';
 import 'package:flutter_restaurant_app/widget/restaurant_card.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -19,7 +20,7 @@ class _RestaurantListState extends State<RestaurantListScreen> {
       appBar: AppBar(title: Text("Eater", style: Theme.of(context).textTheme.headline6,), centerTitle: true,),
       body: Container(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: _buildList(),
         ),
       ),
@@ -60,7 +61,7 @@ class _RestaurantListState extends State<RestaurantListScreen> {
         } else if (state.state == ResultState.NoData) {
           return Center(child: Text(state.message));
         } else if (state.state == ResultState.Error) {
-          return Center(child: Text(state.message));
+          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: "Unable Connect To Internet",));
         } else {
           return Center(child: Text(''));
         }
