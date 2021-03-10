@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/assets/style/style.dart';
-import 'package:flutter_restaurant_app/model/restaurant_search_model.dart';
-import 'package:flutter_restaurant_app/model/services/api_services.dart';
+import 'package:flutter_restaurant_app/model/provider/restaurant_provider.dart';
 import 'package:flutter_restaurant_app/widget/blank_widget.dart';
 import 'package:flutter_restaurant_app/widget/list_search.dart';
+import 'package:provider/provider.dart';
 
 import 'detail_screen.dart';
 
@@ -16,13 +16,6 @@ class RestaurantSearchScreen extends StatefulWidget {
 class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
   TextEditingController searchController = new TextEditingController();
   String query = "";
-  Future<RestaurantSearch> restaurantSearch;
-
-  @override
-  void setState(fn) {
-    restaurantSearch = ApiServices().restaurantSearch(query);
-    super.setState(fn);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +26,9 @@ class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    TextField(
+                child: Consumer<RestaurantProvider>(
+                  builder: (context, state, _) {
+                    return TextField(
                       controller: searchController,
                       decoration: InputDecoration(
                         prefixIcon: Icon(Icons.search_outlined),
@@ -43,38 +36,37 @@ class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
                         border: OutlineInputBorder(borderRadius: BorderRadius.circular(50), borderSide: BorderSide(color: buttonColor, width: 5.0)),
                         filled: true
                       ),
-                      onChanged: (String value) {
-                        setState(() {
-                          query = value;
-                        });
+                      onChanged: (value) {
+                        state.getRestaurantsByQuery(value);
                       },
-                    ),
-                  ],
+                    );
+                  }
                 ),
               ),
-              query.isNotEmpty
-                  ? FutureBuilder(
-                      future: restaurantSearch,
-                      builder: (context, AsyncSnapshot<RestaurantSearch> snapshot) {
-                        if(snapshot.connectionState == ConnectionState.waiting) {
+              query.trim().isNotEmpty
+                  ? Consumer<RestaurantProvider>(
+                      builder: (context, state, _) {
+                        state.getRestaurantsByQuery(query);
+
+                        if(state.state == ResultState.Loading) {
                           return Expanded(child: Center(child: CircularProgressIndicator(strokeWidth: 3)));
-                        } else if(snapshot.connectionState == ConnectionState.done) {
-                          if(snapshot.hasData) {
-                            return Expanded(
-                              child: ListView.builder(
+                        } else if(state.state == ResultState.HasData) {
+                            return ListView.builder(
                                   shrinkWrap: true,
-                                  itemCount: snapshot.data.restaurants.length,
+                                  itemCount: state.restaurantSearch.restaurants.length,
                                   itemBuilder: (context, index) {
-                                    var restaurant = snapshot.data.restaurants[index];
+                                    var restaurant = state.restaurantSearch.restaurants[index];
+                                    print(restaurant.name);
                                     return ListSearch(restaurantS: restaurant, onTap: () { Navigator.pushNamed(context, DetailScreen.routeNameSearch, arguments: restaurant); },);
                                   }
-                              ),
-                            );
-                          }
-                        } else if (snapshot.hasError) {
-                          return Center(child: Text(snapshot.error.toString()));
+                              );
+                        } else if(state.state == ResultState.NoData) {
+                          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: state.message,));
+                        } else if (state.state == ResultState.Error) {
+                          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: state.message));
+                        } else {
+                          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: "Unable Connect To Internet",));
                         }
-                        return BlankWidget(icon: "lib/assets/icon/error.svg", text: "Unable Connect To Internet",);
                       }
                   )
                   : BlankWidget(icon: "lib/assets/icon/search.svg", text: "Type Restaurant",)

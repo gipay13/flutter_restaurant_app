@@ -23,9 +23,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _selectedItemPosition == 0
-          ? ChangeNotifierProvider<RestaurantListProvider>(create: (_) => RestaurantListProvider(ApiServices()), child: RestaurantListScreen(),)
+          ? ChangeNotifierProvider<RestaurantProvider>(create: (_) => RestaurantProvider(apiServices: ApiServices()), child: RestaurantListScreen(),)
           : _selectedItemPosition == 1
-          ? RestaurantSearchScreen()
+          ? ChangeNotifierProvider<RestaurantProvider>(create: (_) => RestaurantProvider(apiServices: ApiServices()), child: RestaurantSearchScreen(),)
           : Placeholder(),
       bottomNavigationBar: SnakeNavigationBar.color(
         behaviour: SnakeBarBehaviour.floating,

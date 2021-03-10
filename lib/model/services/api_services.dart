@@ -21,11 +21,10 @@ class ApiServices {
 
   Future<RestaurantSearch> restaurantSearch(String query) async {
     final response = await http.get(_baseUrl + _searchEndpoint + query);
-    print(response.body);
     if(response.statusCode == 200) {
       return RestaurantSearch.fromJson(json.decode(response.body));
     } else {
-      throw Exception("Failed to Load Detail Restaurant, Please Check Your Internet");
+      throw Exception("Failed to Load Restaurant, Please Check Your Internet");
     }
   }
 

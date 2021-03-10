@@ -28,7 +28,7 @@ class _RestaurantListState extends State<RestaurantListScreen> {
   }
 
   Widget _buildList() {
-    return Consumer<RestaurantListProvider>(
+    return Consumer<RestaurantProvider>(
       builder: (context, state, _) {
         if (state.state == ResultState.Loading) {
           return Center(child: CircularProgressIndicator());
@@ -38,9 +38,9 @@ class _RestaurantListState extends State<RestaurantListScreen> {
               crossAxisCount: 3,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
-              itemCount: state.result.restaurants.length,
+              itemCount: state.restaurantList.restaurants.length,
               itemBuilder: (context, index) {
-                var restaurant = state.result.restaurants[index];
+                var restaurant = state.restaurantList.restaurants[index];
                 return  AnimationConfiguration.staggeredGrid(
                     columnCount: 3,
                     position: index,
@@ -59,13 +59,12 @@ class _RestaurantListState extends State<RestaurantListScreen> {
             ),
           );
         } else if (state.state == ResultState.NoData) {
-          return Center(child: Text(state.message));
-        } else if (state.state == ResultState.Error) {
-          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: "Unable Connect To Internet",));
+          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: state.message,));
+        } else if(state.state == ResultState.Error) {
+          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: state.message,));
         } else {
-          return Center(child: Text(''));
+          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: "Unable Connect To Internet",));
         }
-        return Center(child: CircularProgressIndicator(strokeWidth: 3));
       },
     );
   }
