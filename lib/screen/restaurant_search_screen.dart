@@ -5,6 +5,9 @@ import 'package:flutter_restaurant_app/widget/blank_widget.dart';
 import 'package:flutter_restaurant_app/widget/list_search.dart';
 import 'package:provider/provider.dart';
 
+import '../model/restaurant_search_model.dart';
+import '../model/services/api_services.dart';
+import '../widget/list_search.dart';
 import 'detail_screen.dart';
 
 class RestaurantSearchScreen extends StatefulWidget {
@@ -16,6 +19,13 @@ class RestaurantSearchScreen extends StatefulWidget {
 class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
   TextEditingController searchController = new TextEditingController();
   String query = "";
+  Future<RestaurantSearch> restaurantSearch;
+
+  @override
+  void setState(fn) {
+    restaurantSearch = ApiServices().restaurantSearch(query);
+    super.setState(fn);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,38 +47,40 @@ class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
                         filled: true
                       ),
                       onChanged: (value) {
-                        state.getRestaurantsByQuery(value);
+                        setState(() {
+                          query = value;
+                        });
                       },
                     );
                   }
                 ),
               ),
               query.trim().isNotEmpty
-                  ? Consumer<RestaurantProvider>(
-                      builder: (context, state, _) {
-                        state.getRestaurantsByQuery(query);
-
-                        if(state.state == ResultState.Loading) {
-                          return Expanded(child: Center(child: CircularProgressIndicator(strokeWidth: 3)));
-                        } else if(state.state == ResultState.HasData) {
-                            return ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: state.restaurantSearch.restaurants.length,
-                                  itemBuilder: (context, index) {
-                                    var restaurant = state.restaurantSearch.restaurants[index];
-                                    print(restaurant.name);
-                                    return ListSearch(restaurantS: restaurant, onTap: () { Navigator.pushNamed(context, DetailScreen.routeNameSearch, arguments: restaurant); },);
-                                  }
-                              );
-                        } else if(state.state == ResultState.NoData) {
-                          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: state.message,));
-                        } else if (state.state == ResultState.Error) {
-                          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: state.message));
-                        } else {
-                          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: "Unable Connect To Internet",));
+                  ? FutureBuilder(
+                      future: restaurantSearch,
+                      builder: (context, AsyncSnapshot<RestaurantSearch> snapshot) {
+                        var state = snapshot.connectionState;
+                        if(state == ConnectionState.waiting) {
+                          return Expanded(child: Center(child: CircularProgressIndicator(strokeWidth: 3,)));
+                        } else if (state == ConnectionState.done) {
+                          if(snapshot.hasData) {
+                            return Expanded(
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: snapshot.data.restaurants.length,
+                                itemBuilder: (context, index) {
+                                  var restaurant = snapshot.data.restaurants[index];
+                                  return ListSearch(restaurantS: restaurant, onTap: () { Navigator.pushNamed(context, DetailScreen.routeNameSearch, arguments: restaurant); },);
+                                }
+                              ),
+                            );
+                          }
+                        } else if (snapshot.hasError) {
+                          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: snapshot.error.toString(),));
                         }
+                        return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: "Unable Connect To Internet",));
                       }
-                  )
+                    )
                   : BlankWidget(icon: "lib/assets/icon/search.svg", text: "Type Restaurant",)
             ],
           ),
