@@ -19,13 +19,13 @@ class RestaurantSearchScreen extends StatefulWidget {
 class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
   TextEditingController searchController = new TextEditingController();
   String query = "";
-  Future<RestaurantSearchModel> restaurantSearch;
+  //Future<RestaurantSearchModel> restaurantSearch;
 
-  @override
-  void setState(fn) {
-    restaurantSearch = ApiServices().restaurantSearch(query);
-    super.setState(fn);
-  }
+  // @override
+  // void setState(fn) {
+  //   restaurantSearch = ApiServices().restaurantSearch(query);
+  //   super.setState(fn);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -47,38 +47,32 @@ class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
                         filled: true
                       ),
                       onChanged: (value) {
-                        setState(() {
-                          query = value;
-                        });
+                        state.getRestaurantsSearch(query);
                       },
                     );
                   }
                 ),
               ),
               query.trim().isNotEmpty
-                  ? FutureBuilder(
-                      future: restaurantSearch,
-                      builder: (context, AsyncSnapshot<RestaurantSearchModel> snapshot) {
-                        var state = snapshot.connectionState;
-                        if(state == ConnectionState.waiting) {
-                          return Expanded(child: Center(child: CircularProgressIndicator(strokeWidth: 3,)));
-                        } else if (state == ConnectionState.done) {
-                          if(snapshot.hasData) {
-                            return Expanded(
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: snapshot.data.restaurants.length,
-                                itemBuilder: (context, index) {
-                                  var restaurantSearch = snapshot.data.restaurants[index];
-                                  return ListSearch(restaurant: restaurantSearch, onTap: () { Navigator.pushNamed(context, DetailScreen.routeNameSearch, arguments: restaurantSearch); },);
-                                }
-                              ),
-                            );
-                          }
-                        } else if (snapshot.hasError) {
-                          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: snapshot.error.toString(),));
+                  ? Consumer<RestaurantProvider>(
+                      builder: (context, state, _) {
+                        if(state.state == ResultState.Loading) {
+                          return Expanded(child: Center(child: CircularProgressIndicator()));
+                        } else if(state.state == ResultState.HasData) {
+                          return Expanded(
+                            child: ListView.builder(
+                              itemCount: state.restaurantSearch.restaurants.length,
+                              itemBuilder: (context, index) {
+                                var restaurantSearch = state.restaurantSearch.restaurants[index];
+                                return ListSearch(restaurant: restaurantSearch, onTap: () { Navigator.pushNamed(context, DetailScreen.routeNameSearch, arguments: restaurantSearch); },);
+                              }
+                            ),
+                          );
+                        } else if(state.state == ResultState.NoData) {
+                          return BlankWidget(icon: "lib/assets/icon/search.svg", text: state.message,);
+                        } else {
+                          return BlankWidget(icon: "lib/assets/icon/search.svg", text: state.message,);
                         }
-                        return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: "Unable Connect To Internet",));
                       }
                     )
                   : BlankWidget(icon: "lib/assets/icon/search.svg", text: "Type Restaurant",)
@@ -88,4 +82,30 @@ class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
     );
   }
 }
+
+// FutureBuilder(
+// future: restaurantSearch,
+// builder: (context, AsyncSnapshot<RestaurantSearchModel> snapshot) {
+// var state = snapshot.connectionState;
+// if(state == ConnectionState.waiting) {
+// return Expanded(child: Center(child: CircularProgressIndicator(strokeWidth: 3,)));
+// } else if (state == ConnectionState.done) {
+// if(snapshot.hasData) {
+// return Expanded(
+// child: ListView.builder(
+// shrinkWrap: true,
+// itemCount: snapshot.data.restaurants.length,
+// itemBuilder: (context, index) {
+// var restaurantSearch = snapshot.data.restaurants[index];
+// return ListSearch(restaurant: restaurantSearch, onTap: () { Navigator.pushNamed(context, DetailScreen.routeNameSearch, arguments: restaurantSearch); },);
+// }
+// ),
+// );
+// }
+// } else if (snapshot.hasError) {
+// return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: snapshot.error.toString(),));
+// }
+// return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: "Unable Connect To Internet",));
+// }
+// )
 

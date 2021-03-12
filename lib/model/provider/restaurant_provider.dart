@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/model/restaurant_list_model.dart';
 import 'package:flutter_restaurant_app/model/restaurant_search_model.dart';
@@ -10,7 +9,7 @@ class RestaurantProvider extends ChangeNotifier {
   final ApiServices apiServices;
 
   RestaurantProvider({this.apiServices}) {
-    _fetchListRestaurant();
+    getRestaurants();
   }
 
   RestaurantListModel _restaurantListModel;
@@ -22,6 +21,34 @@ class RestaurantProvider extends ChangeNotifier {
   RestaurantSearchModel get restaurantSearch => _restaurantSearchModel;
   String get message => _message;
   ResultState get state => _state;
+
+  void getRestaurants() {
+    _callRestaurant();
+  }
+
+  void getRestaurantsSearch(String query) {
+    _callRestaurant(query: query);
+  }
+
+  void _callRestaurant({String query = ''}) {
+    _state = ResultState.Loading;
+    notifyListeners();
+    Future<dynamic> result;
+
+    if (query.isEmpty) {
+      result = _fetchListRestaurant();
+    } else {
+      result = _fetchSearchRestaurant(query);
+    }
+
+    result.then((value) {
+      if (query.isEmpty) {
+        _restaurantListModel = value;
+      } else {
+        _restaurantSearchModel = value;
+      }
+    });
+  }
 
 
   Future<dynamic> _fetchListRestaurant() async {
