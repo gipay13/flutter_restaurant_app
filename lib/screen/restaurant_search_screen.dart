@@ -69,9 +69,9 @@ class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
                             ),
                           );
                         } else if(state.state == ResultState.NoData) {
-                          return BlankWidget(icon: "lib/assets/icon/search.svg", text: state.message,);
+                          return BlankWidget(icon: "lib/assets/icon/error.svg", text: state.message,);
                         } else {
-                          return BlankWidget(icon: "lib/assets/icon/search.svg", text: state.message,);
+                          return BlankWidget(icon: "lib/assets/icon/error.svg", text: state.message,);
                         }
                       }
                     )
