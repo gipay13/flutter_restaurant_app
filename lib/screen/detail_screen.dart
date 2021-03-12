@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/assets/style/style.dart';
 import 'package:flutter_restaurant_app/model/restaurant_list_model.dart';
+import 'package:flutter_restaurant_app/model/restaurant_model.dart';
 import 'package:flutter_restaurant_app/model/restaurant_search_model.dart';
 import 'package:flutter_restaurant_app/widget/custom_iconbutton.dart';
 import 'package:flutter_restaurant_app/widget/custom_sliver.dart';
@@ -12,10 +13,9 @@ class DetailScreen extends StatelessWidget {
 
   final double expandedHeight = 400;
   final double roundedContainerHeight = 50;
-  final RestaurantL restaurantL;
-  final RestaurantS restaurantS;
+  final Restaurant restaurant;
 
-  const DetailScreen({this.restaurantL, this.restaurantS});
+  const DetailScreen({this.restaurant});
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +40,9 @@ class DetailScreen extends StatelessWidget {
       delegate: DetailSliverDelegate(
           expandedHeight,
           roundedContainerHeight,
-          "https://restaurant-api.dicoding.dev/images/medium/${(this.restaurantL != null) ? restaurantL.pictureId : restaurantS.pictureId}",
-          (this.restaurantL != null) ? restaurantL.name : restaurantS.name,
-          (this.restaurantL != null) ? restaurantL.city : restaurantS.city
+          "https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId ?? restaurant.pictureId}",
+          restaurant.name ?? "",
+          restaurant.city ?? ""
       ),
     );
   }
@@ -72,11 +72,11 @@ class DetailScreen extends StatelessWidget {
                   children: [
                     SvgPicture.asset("lib/assets/icon/star.svg", width: 30,),
                     SizedBox(width: 3,),
-                    Text("${(this.restaurantL != null) ? restaurantL.rating : restaurantS.rating}", style: Theme.of(context).textTheme.headline5.copyWith(color: buttonColor, fontWeight: FontWeight.bold),)
+                    Text("${restaurant.rating ?? 0}", style: Theme.of(context).textTheme.headline5.copyWith(color: buttonColor, fontWeight: FontWeight.bold),)
                   ],
                 ),
                 SizedBox(height: 10,),
-                Text((this.restaurantL != null) ? restaurantL.description : restaurantS.description, style: Theme.of(context).textTheme.bodyText2),
+                Text(restaurant.description ?? "", style: Theme.of(context).textTheme.bodyText2),
               ],
             ),
           ),

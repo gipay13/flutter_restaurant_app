@@ -40,7 +40,7 @@ class _RestaurantListState extends State<RestaurantListScreen> {
               mainAxisSpacing: 10,
               itemCount: state.restaurantList.restaurants.length,
               itemBuilder: (context, index) {
-                var restaurant = state.restaurantList.restaurants[index];
+                var restaurantList = state.restaurantList.restaurants[index];
                 return  AnimationConfiguration.staggeredGrid(
                     columnCount: 3,
                     position: index,
@@ -48,7 +48,7 @@ class _RestaurantListState extends State<RestaurantListScreen> {
                     child: ScaleAnimation(
                       scale: 0.2,
                       child: SlideAnimation(
-                        child: RestaurantCard(restaurant: restaurant, onTap: () { Navigator.pushNamed(context, DetailScreen.routeNameList, arguments: restaurant); }),
+                        child: RestaurantCard(restaurant: restaurantList, onTap: () { Navigator.pushNamed(context, DetailScreen.routeNameList, arguments: restaurantList); }),
                       ),
                     )
                 );

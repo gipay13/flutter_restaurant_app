@@ -19,7 +19,7 @@ class RestaurantSearchScreen extends StatefulWidget {
 class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
   TextEditingController searchController = new TextEditingController();
   String query = "";
-  Future<RestaurantSearch> restaurantSearch;
+  Future<RestaurantSearchModel> restaurantSearch;
 
   @override
   void setState(fn) {
@@ -58,7 +58,7 @@ class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
               query.trim().isNotEmpty
                   ? FutureBuilder(
                       future: restaurantSearch,
-                      builder: (context, AsyncSnapshot<RestaurantSearch> snapshot) {
+                      builder: (context, AsyncSnapshot<RestaurantSearchModel> snapshot) {
                         var state = snapshot.connectionState;
                         if(state == ConnectionState.waiting) {
                           return Expanded(child: Center(child: CircularProgressIndicator(strokeWidth: 3,)));
@@ -69,8 +69,8 @@ class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
                                 shrinkWrap: true,
                                 itemCount: snapshot.data.restaurants.length,
                                 itemBuilder: (context, index) {
-                                  var restaurant = snapshot.data.restaurants[index];
-                                  return ListSearch(restaurantS: restaurant, onTap: () { Navigator.pushNamed(context, DetailScreen.routeNameSearch, arguments: restaurant); },);
+                                  var restaurantSearch = snapshot.data.restaurants[index];
+                                  return ListSearch(restaurant: restaurantSearch, onTap: () { Navigator.pushNamed(context, DetailScreen.routeNameSearch, arguments: restaurantSearch); },);
                                 }
                               ),
                             );

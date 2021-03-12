@@ -9,20 +9,20 @@ class ApiServices {
   static final String _listEndpoint = "list";
   static final String _searchEndpoint = "/search?q=";
 
-  Future<RestaurantList> restaurantList() async {
+  Future<RestaurantListModel> restaurantList() async {
     final response = await http.get(_baseUrl + _listEndpoint);
 
     if(response.statusCode == 200) {
-      return RestaurantList.fromJson(json.decode(response.body));
+      return RestaurantListModel.fromJson(json.decode(response.body));
     } else {
       throw Exception("Failed to Load Restaurant, Please Check Your Internet");
     }
   }
 
-  Future<RestaurantSearch> restaurantSearch(String query) async {
+  Future<RestaurantSearchModel> restaurantSearch(String query) async {
     final response = await http.get(_baseUrl + _searchEndpoint + query);
     if(response.statusCode == 200) {
-      return RestaurantSearch.fromJson(json.decode(response.body));
+      return RestaurantSearchModel.fromJson(json.decode(response.body));
     } else {
       throw Exception("Failed to Load Restaurant, Please Check Your Internet");
     }

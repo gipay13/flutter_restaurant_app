@@ -13,13 +13,13 @@ class RestaurantProvider extends ChangeNotifier {
     _fetchListRestaurant();
   }
 
-  RestaurantList _restaurantList;
-  RestaurantSearch _restaurantSearch;
+  RestaurantListModel _restaurantListModel;
+  RestaurantSearchModel _restaurantSearchModel;
   String _message = "";
   ResultState _state;
 
-  RestaurantList get restaurantList => _restaurantList;
-  RestaurantSearch get restaurantSearch => _restaurantSearch;
+  RestaurantListModel get restaurantList => _restaurantListModel;
+  RestaurantSearchModel get restaurantSearch => _restaurantSearchModel;
   String get message => _message;
   ResultState get state => _state;
 
@@ -37,7 +37,7 @@ class RestaurantProvider extends ChangeNotifier {
       } else {
         _state = ResultState.HasData;
         notifyListeners();
-        return _restaurantList = response;
+        return _restaurantListModel = response;
       }
 
     } catch(e) {
@@ -60,7 +60,7 @@ class RestaurantProvider extends ChangeNotifier {
       } else {
         _state = ResultState.HasData;
         notifyListeners();
-        return _restaurantSearch = response;
+        return _restaurantSearchModel = response;
       }
 
     } catch(e) {

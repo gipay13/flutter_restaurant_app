@@ -1,16 +1,13 @@
-// To parse this JSON data, do
-//
-//     final restaurantSearch = restaurantSearchFromJson(jsonString);
-
-
 import 'dart:convert';
 
-RestaurantSearch restaurantSearchFromJson(String str) => RestaurantSearch.fromJson(json.decode(str));
+import 'package:flutter_restaurant_app/model/restaurant_model.dart';
 
-String restaurantSearchToJson(RestaurantSearch data) => json.encode(data.toJson());
+RestaurantSearchModel restaurantSearchFromJson(String str) => RestaurantSearchModel.fromJson(json.decode(str));
 
-class RestaurantSearch {
-  RestaurantSearch({
+String restaurantSearchToJson(RestaurantSearchModel data) => json.encode(data.toJson());
+
+class RestaurantSearchModel {
+  RestaurantSearchModel({
     this.error,
     this.founded,
     this.restaurants,
@@ -18,12 +15,12 @@ class RestaurantSearch {
 
   bool error;
   int founded;
-  List<RestaurantS> restaurants;
+  List<Restaurant> restaurants;
 
-  factory RestaurantSearch.fromJson(Map<String, dynamic> json) => RestaurantSearch(
+  factory RestaurantSearchModel.fromJson(Map<String, dynamic> json) => RestaurantSearchModel(
     error: json["error"],
     founded: json["founded"],
-    restaurants: List<RestaurantS>.from(json["restaurants"].map((x) => RestaurantS.fromJson(x))),
+    restaurants: List<Restaurant>.from(json["restaurants"].map((x) => Restaurant.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -33,38 +30,4 @@ class RestaurantSearch {
   };
 }
 
-class RestaurantS {
-  RestaurantS({
-    this.id,
-    this.name,
-    this.description,
-    this.pictureId,
-    this.city,
-    this.rating,
-  });
 
-  String id;
-  String name;
-  String description;
-  String pictureId;
-  String city;
-  double rating;
-
-  factory RestaurantS.fromJson(Map<String, dynamic> json) => RestaurantS(
-    id: json["id"],
-    name: json["name"],
-    description: json["description"],
-    pictureId: json["pictureId"],
-    city: json["city"],
-    rating: json["rating"].toDouble(),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "description": description,
-    "pictureId": pictureId,
-    "city": city,
-    "rating": rating,
-  };
-}

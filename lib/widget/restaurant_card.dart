@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/model/restaurant_list_model.dart';
+import 'package:flutter_restaurant_app/model/restaurant_model.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../assets/style/style.dart';
 
 class RestaurantCard extends StatelessWidget {
   final Function onTap;
-  final RestaurantL restaurant;
+  final Restaurant restaurant;
 
   const RestaurantCard({Key key, this.onTap, this.restaurant}) : super(key: key);
 
