@@ -32,8 +32,7 @@ class RestaurantCard extends StatelessWidget {
                 Text(restaurant.name ?? "", style: Theme.of(context).textTheme.bodyText1.copyWith(fontWeight: FontWeight.bold, color: buttonColor),),
                 Row(
                   children: [
-                    SvgPicture.asset("lib/assets/icon/location.svg", width: 15,
-                      color: Colors.white,),
+                    SvgPicture.asset("lib/assets/icon/location.svg", width: 15, color: Colors.white,),
                     SizedBox(width: 3),
                     Text(restaurant.city ?? "", style: TextStyle(color: Colors.white),),
                   ],

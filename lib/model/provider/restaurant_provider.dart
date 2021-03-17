@@ -8,7 +8,7 @@ enum ResultState { Loading, NoData, HasData, Error }
 class RestaurantProvider extends ChangeNotifier {
   final ApiServices apiServices;
 
-  RestaurantProvider({this.apiServices}) {
+  RestaurantProvider({@required this.apiServices}) {
     getRestaurants();
   }
 
@@ -30,7 +30,7 @@ class RestaurantProvider extends ChangeNotifier {
     _callRestaurant(query: query);
   }
 
-  void _callRestaurant({String query = ''}) {
+  void _callRestaurant({String query = ""}) {
     _state = ResultState.Loading;
     notifyListeners();
     Future<dynamic> result;
