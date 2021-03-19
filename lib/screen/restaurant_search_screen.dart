@@ -107,9 +107,9 @@ class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
               );
             }
           } else if (snapshot.hasError) {
-            return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: snapshot.error.toString(),));
+            return BlankWidget(icon: "lib/assets/icon/error.svg", text: snapshot.error.toString(),);
           }
-          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: "Unable Connect To Internet",));
+          return BlankWidget(icon: "lib/assets/icon/error.svg", text: "Unable Connect To Internet",);
         }
     );
   }

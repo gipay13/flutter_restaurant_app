@@ -70,7 +70,7 @@ class RestaurantProvider extends ChangeNotifier {
     } catch(e) {
       _state = ResultState.Error;
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message = "Unable Connect To Internet";
     }
   }
 
@@ -93,7 +93,7 @@ class RestaurantProvider extends ChangeNotifier {
     } catch(e) {
       _state = ResultState.Error;
       notifyListeners();
-      return _message = "Error => $e";
+      return _message = "Unable Connect To Internet";
     }
   }
 }

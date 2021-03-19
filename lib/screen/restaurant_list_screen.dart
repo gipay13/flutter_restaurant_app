@@ -34,18 +34,33 @@ class _RestaurantListState extends State<RestaurantListScreen> {
         if (state.state == ResultState.Loading) {
           return Center(child: CircularProgressIndicator());
         } else if(state.state == ResultState.HasData) {
-          return GridView.builder(
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-            itemCount: state.restaurantList.restaurants.length,
-            itemBuilder: (context, index) {
-              var restaurantList = state.restaurantList.restaurants[index];
-              return RestaurantCard(restaurant: restaurantList, onTap: () { Navigator.pushNamed(context, DetailScreen.routeNameList, arguments: restaurantList); },);
-            }
+          return AnimationLimiter(
+            child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+              itemCount: state.restaurantList.restaurants.length,
+              itemBuilder: (context, index) {
+                var restaurantList = state.restaurantList.restaurants[index];
+                return AnimationConfiguration.staggeredGrid(
+                  columnCount: 2,
+                  position: index,
+                  duration: const Duration(milliseconds: 200),
+                  child: ScaleAnimation(
+                    scale: 0.2,
+                    child: FadeInAnimation(
+                      child: RestaurantCard(
+                        restaurant: restaurantList,
+                        onTap: () { Navigator.pushNamed(context, DetailScreen.routeNameList, arguments: restaurantList); },
+                      ),
+                    ),
+                  )
+                );
+              }
+            ),
           );
         } else if (state.state == ResultState.NoData) {
           return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: state.message,));
         } else if(state.state == ResultState.Error) {
-          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: state.message,));
+          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: "Unable Connect To Internet",));
         } else {
           return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: "Unable Connect To Internet",));
         }
