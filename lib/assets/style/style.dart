@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-final Color primaryColor = Color(0xFFFFF380);
-final Color secondaryColor = Color(0xFFFFFF00);
-final Color buttonColor = Color(0xFFFBB917);
-final Color alternateColor = Color(0xFFE9AB17);
+final Color primaryColor = Color(0xFFB38534);
+final Color secondaryColor = Color(0xFFD7C0A6);
+final Color buttonColor = Color(0xFF5B4228);
+final Color textColor = Color(0xFFC7C1B3);
+final Color palatte1 = Color(0xFF9E7453);
+final Color palatte2 = Color(0xFF343C4C);
 
 final TextTheme customTheme = TextTheme(
   headline1: GoogleFonts.poppins(fontSize: 92, fontWeight: FontWeight.w300, letterSpacing: -1.5),

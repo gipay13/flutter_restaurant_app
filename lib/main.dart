@@ -15,10 +15,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'ToEat',
+        title: 'Eater',
         theme: ThemeData(
-          primaryColor: buttonColor,
-          accentColor: buttonColor,
+          primaryColor: primaryColor,
+          accentColor: secondaryColor,
           textTheme: customTheme,
         ),
         home: SplashScreenView(
@@ -26,7 +26,9 @@ class MyApp extends StatelessWidget {
           duration: 3000,
           imageSize: 100,
           imageSrc: "lib/assets/image/splash.png",
-          backgroundColor: buttonColor,
+          text: "Eater",
+          textStyle: Theme.of(context).textTheme.headline6.copyWith(color: Colors.white),
+          backgroundColor: primaryColor,
         ),
         routes: {
           HomeScreen.routeName : (context) => HomeScreen(),

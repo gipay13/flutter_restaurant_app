@@ -13,15 +13,21 @@ class RestaurantCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Card(
       child: Stack(
-        alignment: Alignment.bottomLeft,
         children: [
           Ink.image(
-            image: restaurant.id == null ? Container(width: 70, height: 150, child: Icon(Icons.error),) : NetworkImage("https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId ?? ''}",),
+            image: restaurant.id == null 
+                ? Center(child: Container(width: 70, height: 150, child: SvgPicture.asset("lib/assets/icon/error.svg", color: Colors.black12,),))
+                : NetworkImage("https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId ?? ''}"),
             fit: BoxFit.cover,
             height: double.infinity,
             child: InkWell(onTap: onTap),
+          ),
+          Positioned(
+            top: 0,
+            right: 0,
+            child: IconButton(icon: Icon(Icons.bookmark, color: primaryColor,), iconSize: 30, onPressed: () { print("Pressed"); },)
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -29,12 +35,12 @@ class RestaurantCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(restaurant.name ?? "", style: Theme.of(context).textTheme.bodyText1.copyWith(fontWeight: FontWeight.bold, color: buttonColor),),
+                Text(restaurant.name ?? "", style: Theme.of(context).textTheme.bodyText1.copyWith(fontWeight: FontWeight.bold, color: secondaryColor),),
                 Row(
                   children: [
                     SvgPicture.asset("lib/assets/icon/location.svg", width: 15, color: Colors.white,),
                     SizedBox(width: 3),
-                    Text(restaurant.city ?? "", style: TextStyle(color: Colors.white),),
+                    Text(restaurant.city ?? "", style: Theme.of(context).textTheme.subtitle1.copyWith(color: Colors.white),),
                   ],
                 )
               ],

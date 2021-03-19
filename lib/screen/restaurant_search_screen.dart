@@ -30,7 +30,7 @@ class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Eater", style: Theme.of(context).textTheme.headline6,), centerTitle: true,),
+        appBar: AppBar(title: Text("Eater", style: Theme.of(context).textTheme.headline5.copyWith(color: palatte2, fontWeight: FontWeight.bold),), centerTitle: true,),
         body: Center(
           child: Column(
             children: [
@@ -47,13 +47,16 @@ class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
                         filled: true
                       ),
                       onChanged: (value) {
-                        state.getRestaurantsSearch(query);
+                        setState(() {
+                          query = value;
+                        });
+                        //state.getRestaurantsSearch(value);
                       },
                     );
                   }
                 ),
               ),
-              query.trim().isNotEmpty ? _buildListConsumer() : BlankWidget(icon: "lib/assets/icon/search.svg", text: "Type Restaurant",)
+              query.trim().isNotEmpty ? _buildListFutureBuilder() : BlankWidget(icon: "lib/assets/icon/search.svg", text: "Type Restaurant",)
             ],
           ),
         )

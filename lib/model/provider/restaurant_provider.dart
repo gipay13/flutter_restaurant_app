@@ -60,7 +60,7 @@ class RestaurantProvider extends ChangeNotifier {
       if((response.restaurants.isEmpty)) {
         _state = ResultState.NoData;
         notifyListeners();
-        return _message = "No Data Available This Time";
+        return _message = "No Data Available";
       } else {
         _state = ResultState.HasData;
         notifyListeners();

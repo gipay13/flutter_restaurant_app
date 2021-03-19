@@ -58,9 +58,9 @@ class DetailSliverDelegate extends SliverPersistentHeaderDelegate {
                 Text(name, style: Theme.of(context).textTheme.headline4.copyWith(color: buttonColor, fontWeight: FontWeight.bold)),
                 Row(
                   children: [
-                    SvgPicture.asset("lib/assets/icon/location.svg", width: 17,),
+                    SvgPicture.asset("lib/assets/icon/location.svg", width: 20, color: Colors.white,),
                     SizedBox(width: 3),
-                    Text(city, style: Theme.of(context).textTheme.bodyText1),
+                    Text(city, style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.white)),
                   ],
                 ),
               ],
