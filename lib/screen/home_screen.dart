@@ -1,13 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/assets/style/style.dart';
-import 'package:flutter_restaurant_app/model/provider/restaurant_provider.dart';
-import 'package:flutter_restaurant_app/model/services/api_services.dart';
+import 'package:flutter_restaurant_app/screen/bookmark_screen.dart';
 import 'package:flutter_restaurant_app/screen/restaurant_list_screen.dart';
 import 'package:flutter_restaurant_app/screen/restaurant_search_screen.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 
 import 'restaurant_list_screen.dart';
 
@@ -29,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ? RestaurantListScreen()
           : _selectedItemPosition == 1
           ? RestaurantSearchScreen()
-          : Placeholder(),
+          : BookmarkScreen(),
       bottomNavigationBar: SnakeNavigationBar.color(
         behaviour: SnakeBarBehaviour.pinned,
         snakeShape: SnakeShape.indicator,

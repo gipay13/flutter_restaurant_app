@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/assets/style/style.dart';
 import 'package:flutter_restaurant_app/model/restaurant_model.dart';
 import 'package:flutter_restaurant_app/widget/custom_sliver.dart';
-import 'package:flutter_svg/svg.dart';
 
 class DetailScreen extends StatelessWidget {
   static const routeNameList = "/detail_list";

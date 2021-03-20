@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/assets/style/style.dart';
+import 'package:flutter_restaurant_app/model/provider/database_provider.dart';
 import 'package:flutter_restaurant_app/model/utils/navigation.dart';
 import 'package:flutter_restaurant_app/screen/detail_screen.dart';
 import 'package:flutter_restaurant_app/screen/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 
+import 'model/helper/database_helper.dart';
 import 'model/provider/restaurant_provider.dart';
 import 'model/services/api_services.dart';
 
@@ -21,6 +23,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => RestaurantProvider(apiServices: ApiServices())),
+        ChangeNotifierProvider(create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper()))
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

@@ -35,7 +35,7 @@ class _RestaurantListState extends State<RestaurantListScreen> {
     return Consumer<RestaurantProvider>(
       builder: (context, state, _) {
         if (state.state == ResultState.Loading) {
-          return Center(child: CircularProgressIndicator());
+          return Center(child: CircularProgressIndicator(strokeWidth: 3,));
         } else if(state.state == ResultState.HasData) {
           return AnimationLimiter(
             child: GridView.builder(
