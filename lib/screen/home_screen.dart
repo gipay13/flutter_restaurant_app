@@ -9,6 +9,8 @@ import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
+import 'restaurant_list_screen.dart';
+
 
 class HomeScreen extends StatefulWidget {
   static const routeName = "/home";
@@ -24,9 +26,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _selectedItemPosition == 0
-          ? ChangeNotifierProvider<RestaurantProvider>(create: (_) => RestaurantProvider(apiServices: ApiServices()), child: RestaurantListScreen(),)
+          ? RestaurantListScreen()
           : _selectedItemPosition == 1
-          ? ChangeNotifierProvider<RestaurantProvider>(create: (_) => RestaurantProvider(apiServices: ApiServices()), child: RestaurantSearchScreen(),)
+          ? RestaurantSearchScreen()
           : Placeholder(),
       bottomNavigationBar: SnakeNavigationBar.color(
         behaviour: SnakeBarBehaviour.pinned,

@@ -11,7 +11,6 @@ import '../model/restaurant_search_model.dart';
 import '../model/services/api_services.dart';
 import '../widget/list_search.dart';
 import 'detail_screen.dart';
-import 'detail_screen.dart';
 
 class RestaurantSearchScreen extends StatefulWidget {
   @override
