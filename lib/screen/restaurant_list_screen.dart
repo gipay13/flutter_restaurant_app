@@ -2,11 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/assets/style/style.dart';
 import 'package:flutter_restaurant_app/model/provider/restaurant_provider.dart';
+import 'package:flutter_restaurant_app/model/utils/navigation.dart';
+import 'package:flutter_restaurant_app/model/utils/result_state.dart';
 import 'package:flutter_restaurant_app/widget/blank_widget.dart';
 import 'package:flutter_restaurant_app/widget/restaurant_card.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
 
+import 'detail_screen.dart';
 import 'detail_screen.dart';
 
 class RestaurantListScreen extends StatefulWidget {
@@ -49,7 +52,7 @@ class _RestaurantListState extends State<RestaurantListScreen> {
                     child: FadeInAnimation(
                       child: RestaurantCard(
                         restaurant: restaurantList,
-                        onTap: () { Navigator.pushNamed(context, DetailScreen.routeNameList, arguments: restaurantList); },
+                        onTap: () => Navigation.intentWithData(DetailScreen.routeNameList, restaurantList)
                       ),
                     ),
                   )

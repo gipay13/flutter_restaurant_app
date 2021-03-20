@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/assets/style/style.dart';
+import 'package:flutter_restaurant_app/model/utils/navigation.dart';
 import 'package:flutter_restaurant_app/screen/detail_screen.dart';
 import 'package:flutter_restaurant_app/screen/home_screen.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
           textStyle: Theme.of(context).textTheme.headline6.copyWith(color: Colors.white),
           backgroundColor: primaryColor,
         ),
+        navigatorKey: navigatorKey,
         routes: {
           HomeScreen.routeName : (context) => HomeScreen(),
           DetailScreen.routeNameList : (context) => DetailScreen(restaurant : ModalRoute.of(context).settings.arguments),

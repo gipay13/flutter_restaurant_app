@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/assets/style/style.dart';
 import 'package:flutter_restaurant_app/model/provider/restaurant_provider.dart';
+import 'package:flutter_restaurant_app/model/utils/navigation.dart';
+import 'package:flutter_restaurant_app/model/utils/result_state.dart';
 import 'package:flutter_restaurant_app/widget/blank_widget.dart';
 import 'package:flutter_restaurant_app/widget/list_search.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +10,7 @@ import 'package:provider/provider.dart';
 import '../model/restaurant_search_model.dart';
 import '../model/services/api_services.dart';
 import '../widget/list_search.dart';
+import 'detail_screen.dart';
 import 'detail_screen.dart';
 
 class RestaurantSearchScreen extends StatefulWidget {
@@ -74,7 +77,10 @@ class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
                   itemCount: state.restaurantSearch.restaurants.length,
                   itemBuilder: (context, index) {
                     var restaurantSearch = state.restaurantSearch.restaurants[index];
-                    return ListSearch(restaurant: restaurantSearch, onTap: () { Navigator.pushNamed(context, DetailScreen.routeNameSearch, arguments: restaurantSearch); },);
+                    return ListSearch(
+                      restaurant: restaurantSearch,
+                      onTap: () => Navigation.intentWithData(DetailScreen.routeNameSearch, restaurantSearch),
+                    );
                   }
               ),
             );
