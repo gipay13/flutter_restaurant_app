@@ -26,7 +26,7 @@ class ListSearch extends StatelessWidget {
         rating: restaurant.rating ?? 0,
         itemSize: 20,
         itemBuilder: (_, __) {
-          return Icon(Icons.star, color: Colors.amber,);
+          return SvgPicture.asset("lib/assets/icon/star.svg", color: Colors.amber,);
         },
       ),
       onTap: onTap,

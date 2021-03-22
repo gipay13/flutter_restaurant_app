@@ -2,12 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/assets/style/style.dart';
 import 'package:flutter_restaurant_app/model/provider/notification_provider.dart';
+import 'package:flutter_restaurant_app/model/provider/preference_provider.dart';
 import 'package:flutter_restaurant_app/model/provider/restaurant_provider.dart';
 import 'package:flutter_restaurant_app/model/utils/navigation.dart';
 import 'package:flutter_restaurant_app/model/utils/result_state.dart';
 import 'package:flutter_restaurant_app/widget/blank_widget.dart';
 import 'package:flutter_restaurant_app/widget/restaurant_card.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import 'detail_screen.dart';
@@ -25,15 +27,28 @@ class _RestaurantListState extends State<RestaurantListScreen> {
       appBar: AppBar(
         title: Text("Eater", style: Theme.of(context).textTheme.headline5.copyWith(color: palatte2, fontWeight: FontWeight.bold),), centerTitle: true,
         actions: [
-          Consumer<NotificationProvider>(
-            builder: (context, state, _) {
-              return Switch.adaptive(
-                value: state.isSchedule,
-                onChanged: (value) {
-                  state.notificationRestaurant(value);
-                }
-              );
+          Consumer<PreferencesProvider>(
+            builder: (context, provider, child) {
+              return provider.isDailyNewsActive
+                  ? SvgPicture.asset("lib/assets/icon/ringing.svg", width: 30,)
+                  : SvgPicture.asset("lib/assets/icon/bell.svg", width: 30);
             }
+          ),
+          Consumer<PreferencesProvider>(
+            builder: (context, provider, child) {
+              return Consumer<NotificationProvider>(
+                builder: (context, state, _) {
+                  return Switch.adaptive(
+                    activeColor: palatte2,
+                    value: provider.isDailyNewsActive,
+                    onChanged: (value) async {
+                      state.notificationRestaurant(value);
+                      provider.enableDailyNews(value);
+                    },
+                  );
+                },
+              );
+            },
           )
         ],
       ),

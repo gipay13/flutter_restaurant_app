@@ -11,11 +11,11 @@ class TimeHelper {
     final todayDateAndTime = "$todayDate $timeSpecificFormat";
     var resultToday = completeTimeFormat.parseStrict(todayDateAndTime);
 
-    var tommorowFormat = resultToday.add(Duration(days: 1));
-    final tommorowDate = dateFormat.format(tommorowFormat);
-    final tommorowDateAndTime = "$tommorowDate, $timeSpecificFormat";
-    var resultTommorow = completeTimeFormat.parseStrict(tommorowDateAndTime);
+    var tomorrowFormat = resultToday.add(Duration(days: 1));
+    final tomorrowDate = dateFormat.format(tomorrowFormat);
+    final tomorrowDateAndTime = "$tomorrowDate, $timeSpecificFormat";
+    var resultTomorrow = completeTimeFormat.parseStrict(tomorrowDateAndTime);
 
-    return dateNowFormat.isAfter(resultToday) ? resultTommorow : resultToday;
+    return dateNowFormat.isAfter(resultToday) ? resultTomorrow : resultToday;
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/assets/style/style.dart';
 import 'package:flutter_restaurant_app/model/restaurant_model.dart';
 import 'package:flutter_restaurant_app/widget/custom_sliver.dart';
+import 'package:flutter_svg/svg.dart';
 
 class DetailScreen extends StatelessWidget {
   static const routeNameList = "/detail_list";
@@ -57,8 +58,8 @@ class DetailScreen extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.star, color: Colors.amber,),
-                    SizedBox(width: 3,),
+                    SvgPicture.asset("lib/assets/icon/star.svg", color: Colors.amber, width: 25,),
+                    SizedBox(width: 7,),
                     Text("${restaurant.rating ?? 0}", style: Theme.of(context).textTheme.headline5.copyWith(color: buttonColor, fontWeight: FontWeight.bold),)
                   ],
                 ),

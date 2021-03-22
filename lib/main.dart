@@ -4,14 +4,18 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_restaurant_app/assets/style/style.dart';
 import 'package:flutter_restaurant_app/model/helper/notification_helper.dart';
 import 'package:flutter_restaurant_app/model/provider/database_provider.dart';
+import 'package:flutter_restaurant_app/model/provider/notification_provider.dart';
+import 'package:flutter_restaurant_app/model/provider/preference_provider.dart';
 import 'package:flutter_restaurant_app/model/services/background_services.dart';
 import 'package:flutter_restaurant_app/model/utils/navigation.dart';
 import 'package:flutter_restaurant_app/screen/detail_screen.dart';
 import 'package:flutter_restaurant_app/screen/home_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:splash_screen_view/SplashScreenView.dart';
 
 import 'model/helper/database_helper.dart';
+import 'model/helper/preference_helper.dart';
 import 'model/provider/restaurant_provider.dart';
 import 'model/services/api_services.dart';
 
@@ -24,19 +28,22 @@ Future<void> main() async {
   final BackgroundServices _backgroundServices = BackgroundServices();
 
   _backgroundServices.initializeIsolate();
+
   await AndroidAlarmManager.initialize();
   await _notificationHelper.initializeNotification(flutterLocalNotificationsPlugin);
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => RestaurantProvider(apiServices: ApiServices())),
         ChangeNotifierProvider(create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper())),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
+        ChangeNotifierProvider(create: (_) => PreferencesProvider(preferenceHelper: PreferenceHelper(sharedPreference: SharedPreferences.getInstance())))
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
