@@ -34,9 +34,9 @@ class BookmarkScreen extends StatelessWidget {
                   }
                 );
               } else if(state.state == ResultState.NoData) {
-                return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: state.message,));
+                return Center(child: BlankWidget(icon: "lib/assets/icon/bookmark_item.svg", text: state.message,));
               } else {
-                return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: "Unable Connect To Internet",));
+                return Center(child: BlankWidget(icon: "lib/assets/icon/internet.svg", text: "Unable Connect To Internet",));
               }
             },
           ),

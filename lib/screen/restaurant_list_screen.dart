@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/assets/style/style.dart';
+import 'package:flutter_restaurant_app/model/provider/notification_provider.dart';
 import 'package:flutter_restaurant_app/model/provider/restaurant_provider.dart';
 import 'package:flutter_restaurant_app/model/utils/navigation.dart';
 import 'package:flutter_restaurant_app/model/utils/result_state.dart';
@@ -10,7 +11,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:provider/provider.dart';
 
 import 'detail_screen.dart';
-import 'detail_screen.dart';
+
 
 class RestaurantListScreen extends StatefulWidget {
   @override
@@ -21,7 +22,21 @@ class _RestaurantListState extends State<RestaurantListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Eater", style: Theme.of(context).textTheme.headline5.copyWith(color: palatte2, fontWeight: FontWeight.bold),), centerTitle: true,),
+      appBar: AppBar(
+        title: Text("Eater", style: Theme.of(context).textTheme.headline5.copyWith(color: palatte2, fontWeight: FontWeight.bold),), centerTitle: true,
+        actions: [
+          Consumer<NotificationProvider>(
+            builder: (context, state, _) {
+              return Switch.adaptive(
+                value: state.isSchedule,
+                onChanged: (value) {
+                  state.notificationRestaurant(value);
+                }
+              );
+            }
+          )
+        ],
+      ),
       body: Container(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -62,10 +77,8 @@ class _RestaurantListState extends State<RestaurantListScreen> {
           );
         } else if (state.state == ResultState.NoData) {
           return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: state.message,));
-        } else if(state.state == ResultState.Error) {
-          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: "Unable Connect To Internet",));
         } else {
-          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: "Unable Connect To Internet",));
+          return Center(child: BlankWidget(icon: "lib/assets/icon/internet.svg", text: state.message,));
         }
       },
     );

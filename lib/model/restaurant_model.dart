@@ -27,9 +27,9 @@ class Restaurant {
   Map<String, dynamic> toJson() => {
     "id": id,
     "name": name,
-    "description": description,
-    "pictureId": pictureId,
-    "city": city,
-    "rating": rating,
+    "description": description == null ? null : description,
+    "pictureId": pictureId == null ? null : pictureId,
+    "city": city == null ? null : city,
+    "rating": rating.toString(),
   };
 }

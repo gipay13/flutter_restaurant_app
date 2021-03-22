@@ -26,7 +26,7 @@ class DatabaseProvider extends ChangeNotifier {
       _state = ResultState.HasData;
     } else {
       _state = ResultState.NoData;
-      _message = "Start Searching Restaurant";
+      _message = "Start Save Restaurant";
     }
     notifyListeners();
   }

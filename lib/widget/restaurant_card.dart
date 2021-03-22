@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/model/provider/database_provider.dart';
-import 'package:flutter_restaurant_app/model/restaurant_list_model.dart';
 import 'package:flutter_restaurant_app/model/restaurant_model.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -37,11 +36,11 @@ class RestaurantCard extends StatelessWidget {
                       right: 0,
                       child: isBookmarked
                           ? IconButton(
-                            icon: Icon(Icons.bookmark),
+                            icon: Icon(Icons.bookmark, color: primaryColor, size: 35,),
                             onPressed: () => state.deleteBookmark(restaurant.id),
                           )
                           : IconButton(
-                            icon: Icon(Icons.bookmark_border),
+                            icon: Icon(Icons.bookmark_border, color: primaryColor, size: 35,),
                             onPressed: () => state.insertBookmark(restaurant),
                           )
                   ),

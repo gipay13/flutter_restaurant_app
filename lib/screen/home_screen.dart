@@ -1,11 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/assets/style/style.dart';
+import 'package:flutter_restaurant_app/model/helper/notification_helper.dart';
+import 'package:flutter_restaurant_app/model/provider/notification_provider.dart';
+import 'package:flutter_restaurant_app/model/services/background_services.dart';
 import 'package:flutter_restaurant_app/screen/bookmark_screen.dart';
+import 'package:flutter_restaurant_app/screen/detail_screen.dart';
 import 'package:flutter_restaurant_app/screen/restaurant_list_screen.dart';
 import 'package:flutter_restaurant_app/screen/restaurant_search_screen.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import 'restaurant_list_screen.dart';
 
@@ -18,7 +23,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final NotificationHelper _notificationHelper = NotificationHelper();
+  final BackgroundServices _backgroundServices = BackgroundServices();
+
   int _selectedItemPosition = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    receivePort.listen((_) async => await _backgroundServices.someTask());
+    _notificationHelper.configureSelectNotification(DetailScreen.routeNameList);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    selectNotificationSubject.close();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ? RestaurantListScreen()
           : _selectedItemPosition == 1
           ? RestaurantSearchScreen()
-          : BookmarkScreen(),
+          : ChangeNotifierProvider<NotificationProvider>(create: (_) => NotificationProvider(), child: BookmarkScreen(),),
       bottomNavigationBar: SnakeNavigationBar.color(
         behaviour: SnakeBarBehaviour.pinned,
         snakeShape: SnakeShape.indicator,
@@ -47,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
         items: [
           BottomNavigationBarItem(icon: SvgPicture.asset("lib/assets/icon/home.svg", width: 25, color: palatte2,)),
           BottomNavigationBarItem(icon: SvgPicture.asset("lib/assets/icon/search.svg", width: 25, color: palatte2)),
-          BottomNavigationBarItem(icon: SvgPicture.asset("lib/assets/icon/profile.svg", width: 25, color: palatte2)),
+          BottomNavigationBarItem(icon: SvgPicture.asset("lib/assets/icon/bookmark.svg", width: 25, color: palatte2)),
         ],
       ),
     );

@@ -14,7 +14,8 @@ class BlankWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SvgPicture.asset(icon, width: 170, color: Colors.black12,),
-          Text (text, style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.black12),),
+          SizedBox(height: 20,),
+          Text (text, style: Theme.of(context).textTheme.headline5.copyWith(color: Colors.black12),),
         ],
       ),
     );
