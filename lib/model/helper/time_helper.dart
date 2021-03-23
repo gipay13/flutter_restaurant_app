@@ -13,7 +13,7 @@ class TimeHelper {
 
     var tomorrowFormat = resultToday.add(Duration(days: 1));
     final tomorrowDate = dateFormat.format(tomorrowFormat);
-    final tomorrowDateAndTime = "$tomorrowDate, $timeSpecificFormat";
+    final tomorrowDateAndTime = "$tomorrowDate $timeSpecificFormat";
     var resultTomorrow = completeTimeFormat.parseStrict(tomorrowDateAndTime);
 
     return dateNowFormat.isAfter(resultToday) ? resultTomorrow : resultToday;

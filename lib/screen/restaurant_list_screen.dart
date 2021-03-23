@@ -28,22 +28,22 @@ class _RestaurantListState extends State<RestaurantListScreen> {
         title: Text("Eater", style: Theme.of(context).textTheme.headline5.copyWith(color: palatte2, fontWeight: FontWeight.bold),), centerTitle: true,
         actions: [
           Consumer<PreferencesProvider>(
-            builder: (context, provider, child) {
-              return provider.isDailyNewsActive
+            builder: (context, pref, child) {
+              return pref.isDailyNewsActive
                   ? SvgPicture.asset("lib/assets/icon/ringing.svg", width: 30,)
                   : SvgPicture.asset("lib/assets/icon/bell.svg", width: 30);
             }
           ),
           Consumer<PreferencesProvider>(
-            builder: (context, provider, child) {
+            builder: (context, pref, child) {
               return Consumer<NotificationProvider>(
-                builder: (context, state, _) {
+                builder: (context, notif, _) {
                   return Switch.adaptive(
                     activeColor: palatte2,
-                    value: provider.isDailyNewsActive,
+                    value: pref.isDailyNewsActive,
                     onChanged: (value) async {
-                      state.notificationRestaurant(value);
-                      provider.enableDailyNews(value);
+                      notif.notificationRestaurant(value);
+                      pref.enableDailyNews(value);
                     },
                   );
                 },

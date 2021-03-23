@@ -39,7 +39,7 @@ class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Consumer<RestaurantProvider>(
-                  builder: (context, state, _) {
+                  builder: (context, resto, _) {
                     return TextField(
                       controller: searchController,
                       decoration: InputDecoration(
@@ -67,15 +67,15 @@ class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
 
   Widget _buildListConsumer() {
     return Consumer<RestaurantProvider>(
-        builder: (context, state, _) {
-          if(state.state == ResultState.Loading) {
+        builder: (context, resto, _) {
+          if(resto.state == ResultState.Loading) {
             return Expanded(child: Center(child: CircularProgressIndicator(strokeWidth: 3,)));
-          } else if(state.state == ResultState.HasData) {
+          } else if(resto.state == ResultState.HasData) {
             return Expanded(
               child: ListView.builder(
-                  itemCount: state.restaurantSearch.restaurants.length,
+                  itemCount: resto.restaurantSearch.restaurants.length,
                   itemBuilder: (context, index) {
-                    var restaurantSearch = state.restaurantSearch.restaurants[index];
+                    var restaurantSearch = resto.restaurantSearch.restaurants[index];
                     return ListSearch(
                       restaurant: restaurantSearch,
                       onTap: () => Navigation.intentWithData(DetailScreen.routeNameSearch, restaurantSearch),
@@ -83,10 +83,10 @@ class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
                   }
               ),
             );
-          } else if(state.state == ResultState.NoData) {
-            return BlankWidget(icon: "lib/assets/icon/error.svg", text: state.message,);
+          } else if(resto.state == ResultState.NoData) {
+            return BlankWidget(icon: "lib/assets/icon/error.svg", text: resto.message,);
           } else {
-            return BlankWidget(icon: "lib/assets/icon/error.svg", text: state.message,);
+            return BlankWidget(icon: "lib/assets/icon/error.svg", text: resto.message,);
           }
         }
     );

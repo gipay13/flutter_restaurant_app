@@ -13,11 +13,14 @@ class BackgroundServices {
   static String _isolateName = "Isolate";
   static SendPort _sendPort;
 
-  BackgroundServices.internal(){
-    _backgroundServices = this;
-  }
+  BackgroundServices.createObject();
 
-  factory BackgroundServices() => _backgroundServices ?? BackgroundServices.internal();
+  factory BackgroundServices() {
+    if(_backgroundServices == null) {
+      _backgroundServices = BackgroundServices.createObject();
+    }
+    return _backgroundServices;
+  }
 
   void initializeIsolate() {
     IsolateNameServer.registerPortWithName(receivePort.sendPort, _isolateName);

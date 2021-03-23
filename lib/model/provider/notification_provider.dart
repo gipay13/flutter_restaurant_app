@@ -12,7 +12,7 @@ class NotificationProvider extends ChangeNotifier{
     _isSchedule = value;
 
     if(_isSchedule) {
-      print("Schedule Notification Activated");
+      print("Scheduling Notification Activated");
       notifyListeners();
       return await AndroidAlarmManager.periodic(
           Duration(hours: 24),

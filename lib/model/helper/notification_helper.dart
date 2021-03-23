@@ -17,8 +17,8 @@ class NotificationHelper {
   factory NotificationHelper() => _notificationHelper ?? NotificationHelper.internal();
 
   Future<void> initializeNotification(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
-    var androidInitializationSeting = AndroidInitializationSettings("notif_icon");
-    var initializationSetting = InitializationSettings(android: androidInitializationSeting);
+    var androidInitializationSetting = AndroidInitializationSettings("notif_icon");
+    var initializationSetting = InitializationSettings(android: androidInitializationSetting);
 
     await flutterLocalNotificationsPlugin.initialize(initializationSetting, onSelectNotification: (String payload) async {
       if(payload != null) {
