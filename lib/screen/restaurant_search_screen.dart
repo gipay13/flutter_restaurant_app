@@ -7,8 +7,6 @@ import 'package:flutter_restaurant_app/widget/blank_widget.dart';
 import 'package:flutter_restaurant_app/widget/list_search.dart';
 import 'package:provider/provider.dart';
 
-import '../model/restaurant_search_model.dart';
-import '../model/services/api_services.dart';
 import '../widget/list_search.dart';
 import 'detail_screen.dart';
 
@@ -21,13 +19,7 @@ class RestaurantSearchScreen extends StatefulWidget {
 class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
   TextEditingController searchController = new TextEditingController();
   String query = "";
-  Future<RestaurantSearchModel> restaurantSearch;
 
-  @override
-  void setState(fn) {
-    restaurantSearch = ApiServices().restaurantSearch(query);
-    super.setState(fn);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,20 +44,20 @@ class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
                         setState(() {
                           query = value;
                         });
-                        //state.getRestaurantsSearch(value);
+                        resto.getRestaurantsSearch(query);
                       },
                     );
                   }
                 ),
               ),
-              query.trim().isNotEmpty ? _buildListFutureBuilder() : BlankWidget(icon: "lib/assets/icon/search.svg", text: "Type Restaurant",)
+              query.trim().isNotEmpty ? _buildSearchConsumer() : _buildListConsumer()
             ],
           ),
         )
     );
   }
 
-  Widget _buildListConsumer() {
+  Widget _buildSearchConsumer() {
     return Consumer<RestaurantProvider>(
         builder: (context, resto, _) {
           if(resto.state == ResultState.Loading) {
@@ -91,30 +83,29 @@ class _RestaurantSearchScreenState extends State<RestaurantSearchScreen> {
         }
     );
   }
-  Widget _buildListFutureBuilder() {
-    return FutureBuilder(
-        future: restaurantSearch,
-        builder: (context, AsyncSnapshot<RestaurantSearchModel> snapshot) {
-          var state = snapshot.connectionState;
-          if(state == ConnectionState.waiting) {
+  Widget _buildListConsumer() {
+    return Consumer<RestaurantProvider>(
+        builder: (context, resto, _) {
+          if(resto.state == ResultState.Loading) {
             return Expanded(child: Center(child: CircularProgressIndicator(strokeWidth: 3,)));
-          } else if (state == ConnectionState.done) {
-            if(snapshot.hasData) {
-              return Expanded(
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: snapshot.data.restaurants.length,
-                    itemBuilder: (context, index) {
-                      var restaurantSearch = snapshot.data.restaurants[index];
-                      return ListSearch(restaurant: restaurantSearch, onTap: () { Navigator.pushNamed(context, DetailScreen.routeNameSearch, arguments: restaurantSearch); },);
-                    }
-                ),
-              );
-            }
+          } else if(resto.state == ResultState.HasData) {
+            return Expanded(
+              child: ListView.builder(
+                  itemCount: resto.restaurantList.restaurants.length,
+                  itemBuilder: (context, index) {
+                    var restaurantList = resto.restaurantList.restaurants[index];
+                    return ListSearch(
+                      restaurant: restaurantList,
+                      onTap: () => Navigation.intentWithData(DetailScreen.routeNameSearch, restaurantList),
+                    );
+                  }
+              ),
+            );
+          } else if(resto.state == ResultState.NoData) {
+            return BlankWidget(icon: "lib/assets/icon/error.svg", text: resto.message,);
           } else {
-            return BlankWidget(icon: "lib/assets/icon/error.svg", text: snapshot.error.toString(),);
+            return BlankWidget(icon: "lib/assets/icon/error.svg", text: resto.message,);
           }
-          return BlankWidget(icon: "lib/assets/icon/internet.svg", text: "Unable Connect To Internet",);
         }
     );
   }

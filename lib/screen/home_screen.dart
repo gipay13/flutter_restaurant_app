@@ -44,8 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: _selectedItemPosition == 0
           ? RestaurantListScreen()
-          : _selectedItemPosition == 1
-          ? RestaurantSearchScreen()
           : BookmarkScreen(),
       bottomNavigationBar: SnakeNavigationBar.color(
         behaviour: SnakeBarBehaviour.pinned,
@@ -65,7 +63,6 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: (selected) => setState(() => _selectedItemPosition = selected),
         items: [
           BottomNavigationBarItem(icon: SvgPicture.asset("lib/assets/icon/home.svg", width: 25, color: palatte2,)),
-          BottomNavigationBarItem(icon: SvgPicture.asset("lib/assets/icon/search.svg", width: 25, color: palatte2)),
           BottomNavigationBarItem(icon: SvgPicture.asset("lib/assets/icon/bookmark.svg", width: 25, color: palatte2)),
         ],
       ),
