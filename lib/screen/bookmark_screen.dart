@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../assets/style/style.dart';
 import '../widget/blank_widget.dart';
-import '../widget/restaurant_card.dart';
+import '../widget/home_screen_widget/restaurant_card.dart';
 import 'detail_screen.dart';
 
 class BookmarkScreen extends StatelessWidget {
@@ -29,7 +29,7 @@ class BookmarkScreen extends StatelessWidget {
                     var restaurantBookmark = state.bookmark[index];
                     return RestaurantCard(
                       restaurant: restaurantBookmark,
-                      onTap: () => Navigation.intentWithData(DetailScreen.routeNameList, restaurantBookmark),
+                      onTap: () => Navigation.intentWithData(DetailScreen.routeName, restaurantBookmark),
                     );
                   }
                 );

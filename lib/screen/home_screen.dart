@@ -6,7 +6,6 @@ import 'package:flutter_restaurant_app/model/services/background_services.dart';
 import 'package:flutter_restaurant_app/screen/bookmark_screen.dart';
 import 'package:flutter_restaurant_app/screen/detail_screen.dart';
 import 'package:flutter_restaurant_app/screen/restaurant_list_screen.dart';
-import 'package:flutter_restaurant_app/screen/restaurant_search_screen.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -28,9 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    super.initState();
     receivePort.listen((_) async => await _backgroundServices.someTask());
-    _notificationHelper.configureSelectNotification(DetailScreen.routeNameList);
+    _notificationHelper.configureSelectNotification(DetailScreen.routeName);
+    super.initState();
   }
 
   @override

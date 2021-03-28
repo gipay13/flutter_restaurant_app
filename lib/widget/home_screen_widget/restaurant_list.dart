@@ -4,11 +4,11 @@ import 'package:flutter_restaurant_app/assets/style/style.dart';
 import 'package:flutter_restaurant_app/model/restaurant_model.dart';
 import 'package:flutter_svg/svg.dart';
 
-class ListSearch extends StatelessWidget {
+class RestaurantList extends StatelessWidget {
   final Function onTap;
   final Restaurant restaurant;
 
-  const ListSearch({Key key, this.onTap, this.restaurant}) : super(key: key);
+  const RestaurantList({Key key, this.onTap, this.restaurant}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

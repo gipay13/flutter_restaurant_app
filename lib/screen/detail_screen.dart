@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant_app/assets/style/style.dart';
 import 'package:flutter_restaurant_app/model/restaurant_model.dart';
-import 'package:flutter_restaurant_app/widget/custom_sliver.dart';
+import 'package:flutter_restaurant_app/widget/detail_screen_widget/custom_sliver.dart';
 import 'package:flutter_svg/svg.dart';
 
 class DetailScreen extends StatelessWidget {
-  static const routeNameList = "/detail_list";
-  static const routeNameSearch = "/detail_search";
+  static const routeName = "/detail";
 
   final double expandedHeight = 400;
   final double roundedContainerHeight = 50;
@@ -38,7 +37,7 @@ class DetailScreen extends StatelessWidget {
       delegate: DetailSliverDelegate(
           expandedHeight,
           roundedContainerHeight,
-          "https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId ?? restaurant.pictureId}",
+          "https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId ?? ""}",
           restaurant.name ?? "",
           restaurant.city ?? ""
       ),

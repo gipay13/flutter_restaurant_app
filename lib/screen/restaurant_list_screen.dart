@@ -4,16 +4,10 @@ import 'package:flutter_restaurant_app/assets/style/style.dart';
 import 'package:flutter_restaurant_app/model/provider/notification_provider.dart';
 import 'package:flutter_restaurant_app/model/provider/preference_provider.dart';
 import 'package:flutter_restaurant_app/model/provider/restaurant_provider.dart';
-import 'package:flutter_restaurant_app/model/utils/navigation.dart';
-import 'package:flutter_restaurant_app/model/utils/result_state.dart';
-import 'package:flutter_restaurant_app/widget/blank_widget.dart';
-import 'package:flutter_restaurant_app/widget/list_search.dart';
-import 'package:flutter_restaurant_app/widget/restaurant_card.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:flutter_restaurant_app/widget/home_screen_widget/build_list.dart';
+import 'package:flutter_restaurant_app/widget/home_screen_widget/build_search.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-
-import 'detail_screen.dart';
 
 
 class RestaurantListScreen extends StatefulWidget {
@@ -81,81 +75,10 @@ class _RestaurantListState extends State<RestaurantListScreen> {
                   }
               ),
             ),
-            query.trim().isNotEmpty
-                ? _buildSearchConsumer()
-                : _buildList()
+            query.trim().isNotEmpty ? BuildSearch() : BuildList()
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildList() {
-    return Consumer<RestaurantProvider>(
-      builder: (context, resto, _) {
-        if (resto.state == ResultState.Loading) {
-          return Center(child: CircularProgressIndicator(strokeWidth: 3,));
-        } else if(resto.state == ResultState.HasData) {
-          return Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-                itemCount: resto.restaurantList.restaurants.length,
-                itemBuilder: (context, index) {
-                  var restaurantList = resto.restaurantList.restaurants[index];
-                  return AnimationConfiguration.staggeredGrid(
-                    columnCount: 2,
-                    position: index,
-                    duration: const Duration(milliseconds: 200),
-                    child: ScaleAnimation(
-                      scale: 0.2,
-                      child: FadeInAnimation(
-                        child: RestaurantCard(
-                          restaurant: restaurantList,
-                          onTap: () => Navigation.intentWithData(DetailScreen.routeNameList, restaurantList)
-                        ),
-                      ),
-                    )
-                  );
-                }
-              ),
-            ),
-          );
-        } else if (resto.state == ResultState.NoData) {
-          return Center(child: BlankWidget(icon: "lib/assets/icon/error.svg", text: resto.message,));
-        } else {
-          return Center(child: BlankWidget(icon: "lib/assets/icon/internet.svg", text: resto.message,));
-        }
-      },
-    );
-  }
-
-  Widget _buildSearchConsumer() {
-    return Consumer<RestaurantProvider>(
-        builder: (context, resto, _) {
-          if(resto.state == ResultState.Loading) {
-            return Expanded(child: Center(child: CircularProgressIndicator(strokeWidth: 3,)));
-          } else if(resto.state == ResultState.HasData) {
-            return Expanded(
-              child: ListView.builder(
-                  itemCount: resto.restaurantSearch.restaurants.length,
-                  itemBuilder: (context, index) {
-                    var restaurantSearch = resto.restaurantSearch.restaurants[index];
-                    return ListSearch(
-                      restaurant: restaurantSearch,
-                      onTap: () => Navigation.intentWithData(DetailScreen.routeNameSearch, restaurantSearch),
-                    );
-                  }
-              ),
-            );
-          } else if(resto.state == ResultState.NoData) {
-            return BlankWidget(icon: "lib/assets/icon/error.svg", text: resto.message,);
-          } else {
-            return BlankWidget(icon: "lib/assets/icon/error.svg", text: resto.message,);
-          }
-        }
     );
   }
 }

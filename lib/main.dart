@@ -36,6 +36,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -65,8 +66,7 @@ class MyApp extends StatelessWidget {
           navigatorKey: navigatorKey,
           routes: {
             HomeScreen.routeName : (context) => HomeScreen(),
-            DetailScreen.routeNameList : (context) => DetailScreen(restaurant : ModalRoute.of(context).settings.arguments),
-            DetailScreen.routeNameSearch : (context) => DetailScreen(restaurant : ModalRoute.of(context).settings.arguments)
+            DetailScreen.routeName : (context) => DetailScreen(restaurant : ModalRoute.of(context).settings.arguments),
           }
       ),
     );

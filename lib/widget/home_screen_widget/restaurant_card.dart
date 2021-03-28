@@ -4,7 +4,7 @@ import 'package:flutter_restaurant_app/model/restaurant_model.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
-import '../assets/style/style.dart';
+import '../../assets/style/style.dart';
 
 class RestaurantCard extends StatelessWidget {
   final Function onTap;
@@ -50,7 +50,7 @@ class RestaurantCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(restaurant.name ?? "", style: Theme.of(context).textTheme.bodyText1.copyWith(fontWeight: FontWeight.bold, color: secondaryColor),),
+                        Text(restaurant.name ?? "", style: Theme.of(context).textTheme.bodyText1.copyWith(fontWeight: FontWeight.bold, color: primaryColor),),
                         Row(
                           children: [
                             SvgPicture.asset("lib/assets/icon/location.svg", width: 15, color: Colors.white,),
