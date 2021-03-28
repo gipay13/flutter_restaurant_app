@@ -35,7 +35,7 @@ class BuildList extends StatelessWidget {
                           child: FadeInAnimation(
                             child: RestaurantCard(
                                 restaurant: restaurantList,
-                                onTap: () => Navigation.intentWithData(DetailScreen.routeName, restaurantList)
+                                onTap: () => Navigation.intentWithData(DetailScreen.routeName, restaurantList.id)
                             ),
                           ),
                         )

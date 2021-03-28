@@ -23,7 +23,7 @@ class BuildSearch extends StatelessWidget {
                     var restaurantSearch = resto.restaurantSearch.restaurants[index];
                     return RestaurantList(
                       restaurant: restaurantSearch,
-                      onTap: () => Navigation.intentWithData(DetailScreen.routeName, restaurantSearch),
+                      onTap: () => Navigation.intentWithData(DetailScreen.routeName, restaurantSearch.id),
                     );
                   }
               ),

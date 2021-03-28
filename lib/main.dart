@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => RestaurantProvider(apiServices: ApiServices())),
         ChangeNotifierProvider(create: (_) => DatabaseProvider(databaseHelper: DatabaseHelper())),
         ChangeNotifierProvider(create: (_) => NotificationProvider()),
-        ChangeNotifierProvider(create: (_) => PreferencesProvider(preferenceHelper: PreferenceHelper(sharedPreference: SharedPreferences.getInstance())))
+        ChangeNotifierProvider(create: (_) => PreferencesProvider(preferenceHelper: PreferenceHelper(sharedPreference: SharedPreferences.getInstance()))),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
           navigatorKey: navigatorKey,
           routes: {
             HomeScreen.routeName : (context) => HomeScreen(),
-            DetailScreen.routeName : (context) => DetailScreen(restaurant : ModalRoute.of(context).settings.arguments),
+            DetailScreen.routeName : (context) => DetailScreen(id : ModalRoute.of(context).settings.arguments),
           }
       ),
     );

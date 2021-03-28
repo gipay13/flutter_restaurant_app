@@ -3,18 +3,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_restaurant_app/assets/style/style.dart';
 import 'package:flutter_svg/svg.dart';
 
-class DetailSliverDelegate extends SliverPersistentHeaderDelegate {
+class DetailImage extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
   final double roundeContainerHeight;
   final String pictureId;
   final String name;
   final String city;
+  final String address;
 
-  DetailSliverDelegate(this.expandedHeight, this.roundeContainerHeight, this.pictureId, this.name, this.city);
+  DetailImage(this.expandedHeight, this.roundeContainerHeight, this.pictureId, this.name, this.city, this.address);
 
   @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -50,7 +50,7 @@ class DetailSliverDelegate extends SliverPersistentHeaderDelegate {
             ),
           ),
           Positioned(
-            top: expandedHeight - 120 - shrinkOffset,
+            top: expandedHeight - 160 - shrinkOffset,
             left: 30,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,6 +63,7 @@ class DetailSliverDelegate extends SliverPersistentHeaderDelegate {
                     Text(city, style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.white)),
                   ],
                 ),
+                Text(address, style: Theme.of(context).textTheme.bodyText2.copyWith(color: Colors.white)),
               ],
             ),
           )

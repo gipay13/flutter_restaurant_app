@@ -4,10 +4,9 @@ import 'package:flutter_restaurant_app/model/services/api_services.dart';
 import 'package:flutter_restaurant_app/model/utils/result_state.dart';
 
 class RestaurantDetailProvider extends ChangeNotifier {
-  final ApiServices apiServices;
   final String id;
 
-  RestaurantDetailProvider({this.apiServices, this.id}){
+  RestaurantDetailProvider({this.id}){
     _fetchDetailRestaurant();
   }
 
@@ -23,7 +22,7 @@ class RestaurantDetailProvider extends ChangeNotifier {
     try{
       _state = ResultState.Loading;
       notifyListeners();
-      final response = await apiServices.restaurantDetail(id);
+      final response = await ApiServices().restaurantDetail(id);
 
       if(response.restaurant == null) {
         _state = ResultState.NoData;
@@ -37,7 +36,7 @@ class RestaurantDetailProvider extends ChangeNotifier {
     } catch(e) {
       _state = ResultState.Error;
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message = '$e';
     }
   }
 }

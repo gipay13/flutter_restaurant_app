@@ -29,7 +29,7 @@ class BookmarkScreen extends StatelessWidget {
                     var restaurantBookmark = state.bookmark[index];
                     return RestaurantCard(
                       restaurant: restaurantBookmark,
-                      onTap: () => Navigation.intentWithData(DetailScreen.routeName, restaurantBookmark),
+                      onTap: () => Navigation.intentWithData(DetailScreen.routeName, restaurantBookmark.id),
                     );
                   }
                 );
