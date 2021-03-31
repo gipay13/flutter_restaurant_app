@@ -8,7 +8,7 @@ class ListDrink extends StatelessWidget {
     final state = Provider.of<RestaurantDetailProvider>(context);
 
     return ExpansionTile(
-      title: Text("Makanan", style: Theme.of(context).textTheme.headline6),
+      title: Text("Minuman", style: Theme.of(context).textTheme.headline6),
       children: [
         GridView.builder(
           shrinkWrap: true,
@@ -18,7 +18,7 @@ class ListDrink extends StatelessWidget {
             return Card(
               child: Column(
                 children: [
-                  Image.asset("lib/assets/image/drink.png", fit: BoxFit.fitWidth, width: 70,),
+                  Image.asset("lib/assets/image/drink.png", fit: BoxFit.fitWidth, width: MediaQuery.of(context).size.width/6,),
                   Text(state.restaurantDetailModel.restaurant.menus.drinks[index].name ?? "", style: Theme.of(context).textTheme.bodyText2),
                 ],
               ),

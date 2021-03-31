@@ -18,7 +18,7 @@ class ListFood extends StatelessWidget {
             return Card(
               child: Column(
                 children: [
-                  Image.asset("lib/assets/image/food.png", fit: BoxFit.fitWidth, width: 70,),
+                  Image.asset("lib/assets/image/food.png", fit: BoxFit.fitWidth, width: MediaQuery.of(context).size.width/6,),
                   Text(state.restaurantDetailModel.restaurant.menus.foods[index].name ?? "", style: Theme.of(context).textTheme.bodyText2),
                 ],
               ),

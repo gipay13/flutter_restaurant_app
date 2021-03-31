@@ -36,7 +36,7 @@ class RestaurantDetailProvider extends ChangeNotifier {
     } catch(e) {
       _state = ResultState.Error;
       notifyListeners();
-      return _message = '$e';
+      return _message = "Unable Connect To Internet";
     }
   }
 }
